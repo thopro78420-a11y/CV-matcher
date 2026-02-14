@@ -1,0 +1,16 @@
+aliases:
+  sap s/4hana:
+    - s/4hana
+    - sap s4 hana
+    - sap erp
+  python:
+    - py
+  gestion de projet:
+    - project management
+    - pmo
+  machine learning:
+    - ml
+    - apprentissage automatique
+critical_keywords:
+  - sap s/4hana
+  - python

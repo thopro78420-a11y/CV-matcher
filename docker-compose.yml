@@ -1,0 +1,39 @@
+services:
+  mongo:
+    image: mongo:7
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    environment:
+      MONGODB_URI: mongodb://mongo:27017/cv_matcher
+      MONGODB_DB: cv_matcher
+      CHROMA_PERSIST_DIR: /data/chroma
+      LLM_PROVIDER: mock
+      EMBEDDINGS_PROVIDER: local
+      CORS_ORIGINS: http://localhost:5173
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - chroma_data:/data/chroma
+
+  frontend:
+    build: ./frontend
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+
+volumes:
+  mongo_data:
+  chroma_data:
